@@ -1,10 +1,10 @@
-package tn.esprit.feedservice;
+package tn.esprit.jobservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FeedServiceApplicationTests {
+class JobServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
