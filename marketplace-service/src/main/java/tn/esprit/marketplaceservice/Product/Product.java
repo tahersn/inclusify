@@ -77,8 +77,8 @@ public class Product implements Serializable {
         super();
     }
 
-    public Product(int id, String name, String description, String image, int quantity, float price, Set<Category> categories) {
-        this.id = id;
+    public Product(String name, String description, String image, int quantity, float price, Set<Category> categories) {
+        super();
         this.name = name;
         this.description = description;
         this.image = image;

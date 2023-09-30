@@ -51,8 +51,14 @@ public class Category implements Serializable {
         super();
     }
 
-    public Category(int id, String name, String description, Set<Product> products) {
-        this.id = id;
+    public Category(String name, String description) {
+        super();
+        this.name = name;
+        this.description = description;
+    }
+
+    public Category(String name, String description, Set<Product> products) {
+        super();
         this.name = name;
         this.description = description;
         this.products = products;
