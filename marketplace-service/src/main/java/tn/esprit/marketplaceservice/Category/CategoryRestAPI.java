@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CategoryRestAPI {
-    private String title="Hello, I'm the Category Microservice";
+    private String title="Hello, I'm the Marketplace/Category Microservice";
     @RequestMapping("/hello")
     public String sayHello(){
         System.out.println(title);
