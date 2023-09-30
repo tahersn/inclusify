@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/Category")
 public class CategoryRestAPI {
     private String title="Hello, I'm the Marketplace/Category Microservice";
     @RequestMapping("/hello")
