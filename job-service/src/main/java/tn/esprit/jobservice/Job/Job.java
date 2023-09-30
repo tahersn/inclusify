@@ -1,4 +1,6 @@
-package tn.esprit.jobservice.Entity;
+package tn.esprit.jobservice.Job;
+import tn.esprit.jobservice.JobApplication.JobApplication;
+
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

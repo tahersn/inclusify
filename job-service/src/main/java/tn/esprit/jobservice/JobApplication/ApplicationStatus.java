@@ -1,4 +1,4 @@
-package tn.esprit.jobservice.Entity;
+package tn.esprit.jobservice.JobApplication;
 
 public enum ApplicationStatus {
     PENDING,

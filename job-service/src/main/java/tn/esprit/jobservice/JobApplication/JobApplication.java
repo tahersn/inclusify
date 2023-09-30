@@ -1,9 +1,10 @@
-package tn.esprit.jobservice.Entity;
+package tn.esprit.jobservice.JobApplication;
+import tn.esprit.jobservice.Job.Job;
+
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class JobApplication implements Serializable {
@@ -13,6 +14,21 @@ public class JobApplication implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    private String motivation ;
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
+
+    private ApplicationStatus applicationStatus ;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getMotivation() {
         return motivation;
@@ -35,21 +51,6 @@ public class JobApplication implements Serializable {
 
     public void setApplicationStatus(ApplicationStatus applicationStatus) {
         this.applicationStatus = applicationStatus;
-    }
-
-    private String motivation ;
-    @ManyToOne
-    @JoinColumn(name = "job_id")
-    private Job job;
-
-    private ApplicationStatus applicationStatus ;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
 }
