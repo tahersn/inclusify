@@ -19,7 +19,7 @@ public class Job implements Serializable{
     private String Title ;
     private String Description ;
     private String Type ;
-    private Float SalaryRange ;
+    private String SalaryRange ;
     private String Address ;
     private String Company ;
 
@@ -31,14 +31,14 @@ public class Job implements Serializable{
         super();
     }
 
-    public Job( String title, String description, String type, Float salaryRange, String address, String company, List<JobApplication> jobApplications) {
+    public Job( String title, String description, String type, String salaryRange, String address, String company, List<JobApplication> jobApplications) {
         super() ;
-        Title = title;
-        Description = description;
-        Type = type;
-        SalaryRange = salaryRange;
-        Address = address;
-        Company = company;
+        this.Title = title;
+        this.Description = description;
+        this.Type = type;
+        this.SalaryRange = salaryRange;
+        this.Address = address;
+        this.Company = company;
         this.jobApplications = jobApplications;
     }
 
@@ -72,11 +72,11 @@ public class Job implements Serializable{
         Type = type;
     }
 
-    public Float getSalaryRange() {
+    public String getSalaryRange() {
         return SalaryRange;
     }
 
-    public void setSalaryRange(Float salaryRange) {
+    public void setSalaryRange(String salaryRange) {
         SalaryRange = salaryRange;
     }
 

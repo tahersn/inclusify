@@ -1,6 +1,8 @@
 package tn.esprit.jobservice.Job;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,6 +46,9 @@ public class JobService {
         else{
             return null;
         }
+    }
+    public Page<Job> getJobsByTitle(String title, Pageable pageable) {
+        return jobRepository.JobByTitle(title, pageable);
     }
 
 }
