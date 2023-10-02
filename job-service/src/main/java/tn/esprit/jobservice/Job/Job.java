@@ -42,6 +42,9 @@ public class Job implements Serializable{
         this.jobApplications = jobApplications;
     }
 
+    public Job(Long jobId) {
+    }
+
     public Long getId() {
         return id;
     }

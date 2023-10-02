@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class JobRestAPI {
     @Autowired
     private JobService jobService;
-    @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Job> addJob(@RequestBody Job job){
         return new ResponseEntity<>(jobService.addJob(job), HttpStatus.OK);

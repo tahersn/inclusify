@@ -2,13 +2,30 @@ package tn.esprit.jobservice.JobApplication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
 
 @Service
 public class JobApplicationService {
     @Autowired
     private JobApplicationRepo jobApplicationRepo;
 
-    public JobApplication addJobApplication(JobApplication jobApplication){
+    @Transactional
+    public JobApplication addJobApplication(JobApplication jobApplication, MultipartFile cvFile) throws IOException {
+        // Add any validation logic you need for the CV or motivation.
+
+        // Store the CV file in the specified directory
+        String cvFilePath = "c:/inclusify-files/" + cvFile.getOriginalFilename();
+        File cvFileOnDisk = new File(cvFilePath);
+        cvFile.transferTo(cvFileOnDisk);
+
+        // Set the CV path in the JobApplication entity
+        jobApplication.setCvPath(cvFilePath);
+
+
         return jobApplicationRepo.save(jobApplication);
     }
 
