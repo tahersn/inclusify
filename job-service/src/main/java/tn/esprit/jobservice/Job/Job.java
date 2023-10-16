@@ -1,10 +1,12 @@
 package tn.esprit.jobservice.Job;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import tn.esprit.jobservice.JobApplication.JobApplication;
 
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,8 +25,14 @@ public class Job implements Serializable{
     private String Address ;
     private String Company ;
 
+    private Date createdAt;
+
+
+
+
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<JobApplication> jobApplications;
 
     public Job() {
@@ -40,6 +48,9 @@ public class Job implements Serializable{
         this.Address = address;
         this.Company = company;
         this.jobApplications = jobApplications;
+        //add created at
+
+
     }
 
     public Job(Long jobId) {
@@ -104,6 +115,14 @@ public class Job implements Serializable{
 
     public void setJobApplications(List<JobApplication> jobApplications) {
         this.jobApplications = jobApplications;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

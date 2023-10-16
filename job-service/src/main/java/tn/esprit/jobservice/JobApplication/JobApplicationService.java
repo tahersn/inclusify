@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class JobApplicationService {
@@ -50,5 +51,18 @@ public class JobApplicationService {
         }
 
     }
+    public JobApplication getJobApplication(Long id){
+        if(jobApplicationRepo.findById(id).isPresent()){
+            return jobApplicationRepo.findById(id).get();
+        }
+        else{
+            return null;
+        }
+    }
+
+    public List<JobApplication> getJobApplicationsByJobId(Long jobId){
+        return jobApplicationRepo.getJobApplicationsByJobId(jobId);
+    }
+
 
 }

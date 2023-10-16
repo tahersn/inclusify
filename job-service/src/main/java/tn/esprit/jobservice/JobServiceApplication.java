@@ -22,7 +22,6 @@ public class JobServiceApplication {
 		return args -> {
 			jobRepository.save(new Job("Java Developer","Java Developer","Full Time","1000-2000","Tunis","Esprit",null));
 			jobRepository.save(new Job("Java Developer","Java Developer","Full Time","1000-2000","Tunis","Esprit",null));
-
 			jobRepository.findAll().forEach(System.out::println);
 		};
 	}

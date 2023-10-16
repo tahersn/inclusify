@@ -10,6 +10,7 @@ import tn.esprit.jobservice.Job.Job;
 import tn.esprit.jobservice.Job.JobService;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/jobApplication")
@@ -64,4 +65,17 @@ public class JobApplicationRestAPI {
     public ResponseEntity<String> deleteJobApplication(@PathVariable("id") Long id){
         return new ResponseEntity<>(jobApplicationService.deleteJobApplication(id), HttpStatus.OK);
     }
+    @GetMapping(value="/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<JobApplication> getJobApplication(@PathVariable("id") Long id){
+        return new ResponseEntity<>(jobApplicationService.getJobApplication(id), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/byJobId/{jobId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<JobApplication>> getJobApplicationsByJobId(@PathVariable("jobId") Long jobId) {
+        List<JobApplication> jobApplications = jobApplicationService.getJobApplicationsByJobId(jobId);
+        return new ResponseEntity<>(jobApplications, HttpStatus.OK);
+    }
+
 }
