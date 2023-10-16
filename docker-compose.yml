@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+
+  Event:
+    container_name: event
+    build: .\event-service
+    ports:
+      - "8085:8091"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/microservices?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+
+
+    image: "event-ms"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql
+
+  Eureka:
+    container_name: eureka
+    build: .\eureka-server-service
+    hostname: serviceregistry
+    ports:
+      - "8761:8761"
+    image: "eureka"
+
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+
+
+  db-mysql:
+    image: "mysql:5.6"
+    container_name: db-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3307:3306"
+    restart: unless-stopped
