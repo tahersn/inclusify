@@ -1,0 +1,4 @@
+FROM openjdk:17
+EXPOSE 8090
+ADD target/feed-service-0.0.1-SNAPSHOT.jar feed-service-docker.jar
+ENTRYPOINT ["java","-jar","feed-service-docker.jar"]
