@@ -11,7 +11,7 @@
 	<groupId>tn.esprit</groupId>
 	<artifactId>marketplace-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>club-service</name>
+	<name>marketplace-service</name>
 	<description>The marketplace service</description>
 	<properties>
 		<java.version>1.8</java.version>
