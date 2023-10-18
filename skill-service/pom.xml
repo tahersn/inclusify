@@ -14,7 +14,7 @@
 	<name>skill-service</name>
 	<description>The skill service</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>1.8</java.version>
 		<spring-cloud.version>2021.0.8</spring-cloud.version>
 	</properties>
 	<dependencies>
