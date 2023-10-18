@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.eventservice.Entity.Event;
 import tn.esprit.eventservice.Repository.EventRespository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +21,18 @@ public class EventController {
         return eventRepository.findAll();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        Event savedEvent = eventRepository.save(event);
-        return new ResponseEntity<>(savedEvent, HttpStatus.CREATED);
+        Event createdEvent = eventRepository.save(event);
+        return ResponseEntity.ok(createdEvent);
     }
 
-    @PutMapping(value = "/{eventId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/{eventId}")
     public ResponseEntity<Event> updateEvent(@PathVariable Integer eventId, @RequestBody Event updatedEvent) {
         Optional<Event> existingEventOptional = eventRepository.findById(eventId);
 
         if (!existingEventOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
 
         Event existingEvent = existingEventOptional.get();
@@ -42,17 +41,12 @@ public class EventController {
         existingEvent.setDescription(updatedEvent.getDescription());
         existingEvent.setDate(updatedEvent.getDate());
         existingEvent.setLocation(updatedEvent.getLocation());
-        existingEvent.setOrganizer(updatedEvent.getOrganizer());
-        existingEvent.setStatus(updatedEvent.getStatus());
-        existingEvent.setCapacity(updatedEvent.getCapacity());
-        existingEvent.setRegistrationDeadline(updatedEvent.getRegistrationDeadline());
-        existingEvent.setImage(updatedEvent.getImage());
-        existingEvent.setCreationDate(updatedEvent.getCreationDate());
 
-        Event updated = eventRepository.save(existingEvent);
+        Event updatedEventEntity = eventRepository.save(existingEvent);
 
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+        return ResponseEntity.ok(updatedEventEntity);
     }
+
 
     @DeleteMapping("/{eventId}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Integer eventId) {

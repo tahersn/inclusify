@@ -1,9 +1,10 @@
 package tn.esprit.eventservice.Entity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
+import tn.esprit.eventservice.Entity.CategoryEvent;
+import tn.esprit.eventservice.Model.User;
 
 @Entity
 public class Event {
@@ -18,7 +19,10 @@ public class Event {
     private Date date;
 
     private String location;
+
+    @Column(name = "organizer")
     private String organizer;
+
 
     @Enumerated(EnumType.STRING)
     private StatusEvent status;
@@ -33,8 +37,18 @@ public class Event {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
+
     @ElementCollection
-    private Set<Long> attendeeIds = new HashSet<>();
+    @CollectionTable(name = "event_attendees", joinColumns = @JoinColumn(name = "event_id"))
+    @Column(name = "attendee_id")
+    private List<String> attendeeIds;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEvent category;
+
 
     // getters
 
@@ -82,9 +96,14 @@ public class Event {
         return creationDate;
     }
 
-    public Set<Long> getAttendeeIds() {
-        return attendeeIds;
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer;
     }
+
+    public CategoryEvent getCategory() {
+        return category;
+    }
+
     //setters
 
     public void setName(String name) {
@@ -101,10 +120,6 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public void setOrganizer(String organizer) {
-        this.organizer = organizer;
     }
 
     public void setStatus(StatusEvent status) {
@@ -127,8 +142,12 @@ public class Event {
         this.creationDate = creationDate;
     }
 
-    public void setAttendeeIds(Set<Long> attendeeIds) {
-        this.attendeeIds = attendeeIds;
+    public void setAttendeeIds(Set<String> attendeeIds) {
+        this.attendeeIds = new ArrayList<>(attendeeIds);
+    }
+
+    public void setCategory(CategoryEvent category) {
+        this.category = category;
     }
 
     // Constructors
@@ -136,7 +155,8 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String description, Date date, String location, String organizer, StatusEvent status, Integer capacity, Date registrationDeadline, String image, Date creationDate, Set<Long> attendeeIds) {
+
+    public Event(String name, String description, Date date, String location, String organizer, StatusEvent status, int capacity, Date registrationDeadline, String image, Date creationDate, List<String> attendeeIds, CategoryEvent category) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -148,5 +168,6 @@ public class Event {
         this.image = image;
         this.creationDate = creationDate;
         this.attendeeIds = attendeeIds;
+        this.category = category;
     }
 }

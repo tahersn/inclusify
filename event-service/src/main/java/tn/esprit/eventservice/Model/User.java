@@ -1,4 +1,4 @@
-package tn.esprit.feedservice.model;
+package tn.esprit.eventservice.Model;
 
 import lombok.*;
 
@@ -10,6 +10,11 @@ public class User {
 
     private String _id;
     private String firstName;
+
+    public String get_id() {
+        return _id;
+    }
+
     private String lastName;
     private String email;
     private String password;

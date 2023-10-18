@@ -1,4 +1,4 @@
-package tn.esprit.eventservice.feign;
+package tn.esprit.eventservice.Feign;
 
 import org.springframework.cloud.openfeign.*;
 import org.springframework.web.bind.annotation.*;
@@ -17,4 +17,6 @@ public interface UserRestFeignClientService {
 
     @GetMapping("/users/{idUser}")
     public User findById(@PathVariable String idUser);
+
+
 }
