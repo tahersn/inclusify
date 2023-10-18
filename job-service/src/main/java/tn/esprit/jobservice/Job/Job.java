@@ -1,6 +1,7 @@
 package tn.esprit.jobservice.Job;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import tn.esprit.jobservice.JobApplication.JobApplication;
+import tn.esprit.jobservice.model.User;
 
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,8 @@ public class Job implements Serializable{
 
 
 
+    @Transient
+    private User user;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
     @JsonIgnore
