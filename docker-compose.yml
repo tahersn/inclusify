@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+
+  Eureka:
+    container_name: eureka-ms
+    build: .\eureka-server-service
+    hostname: serviceregistry
+    ports:
+      - "8761:8761"
+    image: "eureka"
+
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+
+
+  Job:
+    container_name: job-ms-compose
+    build: .\job-service
+    ports:
+      - "8099:8092"
+    environment:
+      - spring.datasource.url=jdbc:h2:mem:test
+      - spring.datasource.username=sa
+      - spring.datasource.password=password
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+
+
+    image: "job-ms-dock"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
