@@ -1,11 +1,9 @@
-package tn.esprit.marketplaceservice.Product;
+package tn.esprit.marketplaceservice.entities;
 
-import tn.esprit.marketplaceservice.Category.Category;
+import tn.esprit.marketplaceservice.entities.Category;
+import tn.esprit.marketplaceservice.model.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -18,6 +16,9 @@ public class Product implements Serializable {
     private String name,description,image;
     private int quantity;
     private float price;
+    @Transient
+    private User publisher;
+    private int UserId;
     @ManyToMany
     Set<Category> categories;
 

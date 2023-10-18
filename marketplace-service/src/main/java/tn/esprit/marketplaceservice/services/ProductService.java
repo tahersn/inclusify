@@ -1,7 +1,9 @@
-package tn.esprit.marketplaceservice.Product;
+package tn.esprit.marketplaceservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.marketplaceservice.entities.Product;
+import tn.esprit.marketplaceservice.repositories.ProductRepository;
 
 @Service
 public class ProductService {

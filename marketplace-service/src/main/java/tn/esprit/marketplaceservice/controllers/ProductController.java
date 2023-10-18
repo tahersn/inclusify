@@ -1,20 +1,17 @@
-package tn.esprit.marketplaceservice.Product;
+package tn.esprit.marketplaceservice.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.marketplaceservice.entities.Product;
+import tn.esprit.marketplaceservice.services.ProductService;
 
 @RestController
-@RequestMapping("/Product")
-public class ProductRestAPI {
+@RequestMapping("/product")
+public class ProductController {
     private String title="Hello, I'm the Marketplace/Product Microservice";
-    @RequestMapping("/hello")
-    public String sayHello(){
-        System.out.println(title);
-        return  title;
-    }
 
     @Autowired
     private ProductService productService;

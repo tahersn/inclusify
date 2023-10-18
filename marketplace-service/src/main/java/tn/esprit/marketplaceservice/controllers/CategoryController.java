@@ -1,14 +1,16 @@
-package tn.esprit.marketplaceservice.Category;
+package tn.esprit.marketplaceservice.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.marketplaceservice.entities.Category;
+import tn.esprit.marketplaceservice.services.CategoryService;
 
 @RestController
 @RequestMapping("/Category")
-public class CategoryRestAPI {
+public class CategoryController {
     private String title="Hello, I'm the Marketplace/Category Microservice";
     @RequestMapping("/hello")
     public String sayHello(){

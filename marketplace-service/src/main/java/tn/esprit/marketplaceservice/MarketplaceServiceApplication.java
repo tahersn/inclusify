@@ -5,9 +5,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import tn.esprit.marketplaceservice.Category.Category;
-import tn.esprit.marketplaceservice.Category.CategoryRepository;
-import tn.esprit.marketplaceservice.Product.ProductRepository;
+import tn.esprit.marketplaceservice.entities.Category;
+import tn.esprit.marketplaceservice.repositories.CategoryRepository;
+import tn.esprit.marketplaceservice.repositories.ProductRepository;
 
 @SpringBootApplication
 public class MarketplaceServiceApplication {

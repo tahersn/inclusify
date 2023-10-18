@@ -1,6 +1,4 @@
-package tn.esprit.marketplaceservice.Category;
-
-import tn.esprit.marketplaceservice.Product.Product;
+package tn.esprit.marketplaceservice.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
