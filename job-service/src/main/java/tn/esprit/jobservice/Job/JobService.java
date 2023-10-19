@@ -32,6 +32,7 @@ public class JobService {
         existingJob.setSalaryRange(job.getSalaryRange());
         existingJob.setAddress(job.getAddress());
         existingJob.setCompany(job.getCompany());
+        existingJob.setUser(job.getUser());
             return jobRepository.save(job);
     }
         else{

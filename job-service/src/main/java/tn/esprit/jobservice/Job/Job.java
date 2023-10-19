@@ -26,13 +26,8 @@ public class Job implements Serializable{
     private String Address ;
     private String Company ;
 
-    private Date createdAt;
-
-
-
-
-    @Transient
-    private User user;
+    @Column(name = "user_id")
+    private String user;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -42,7 +37,7 @@ public class Job implements Serializable{
         super();
     }
 
-    public Job( String title, String description, String type, String salaryRange, String address, String company, List<JobApplication> jobApplications) {
+    public Job( String title, String description, String type, String salaryRange, String address, String company,String user, List<JobApplication> jobApplications) {
         super() ;
         this.Title = title;
         this.Description = description;
@@ -51,7 +46,7 @@ public class Job implements Serializable{
         this.Address = address;
         this.Company = company;
         this.jobApplications = jobApplications;
-        //add created at
+        this.user = user;
 
 
     }
@@ -119,13 +114,14 @@ public class Job implements Serializable{
     public void setJobApplications(List<JobApplication> jobApplications) {
         this.jobApplications = jobApplications;
     }
+    public String getUser() {
 
-    public Date getCreatedAt() {
-        return createdAt;
+        return user;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setUser(String user) {
+        this.user = user;
     }
+
 
 }
