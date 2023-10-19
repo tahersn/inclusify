@@ -29,7 +29,7 @@ public class Job implements Serializable{
     @Column(name = "user_id")
     private String user;
 
-    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "job")
     @JsonIgnore
     private List<JobApplication> jobApplications;
 

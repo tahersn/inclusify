@@ -27,11 +27,12 @@ public class JobApplicationRestAPI {
             @RequestParam("cvFile") MultipartFile cvFile,
             @RequestParam("motivation") String motivation,
             @RequestParam("jobId") Long jobId,
+            @RequestParam("user") String user,
             @RequestParam("applicationStatus") ApplicationStatus applicationStatus) {
 
         try {
             // Create a new JobApplication entity
-            JobApplication jobApplication = new JobApplication();
+            JobApplication jobApplication = new JobApplication(cvFile.getOriginalFilename(), jobService.getJob(jobId), user, motivation, applicationStatus);
             jobApplication.setMotivation(motivation);
 
             // Set the CV path in the JobApplication entity
@@ -42,6 +43,7 @@ public class JobApplicationRestAPI {
             // Set the job association and application status
             //Job job = jobService.getJob(jobId);
             jobApplication.setJob(jobService.getJob(jobId));
+            jobApplication.setUser(user);
             jobApplication.setApplicationStatus(applicationStatus);
 
             // Call the service method to create the job application
