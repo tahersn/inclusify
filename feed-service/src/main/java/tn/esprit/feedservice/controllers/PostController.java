@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.feedservice.entities.*;
 import tn.esprit.feedservice.repositories.*;
 
+import javax.annotation.security.*;
+import java.security.*;
 import java.util.*;
 
 /**
@@ -20,8 +22,17 @@ public class PostController {
         this.postRepository = postRepository;
     }
 
-    @GetMapping
-    public List<Post> getAllPosts() {
+    @GetMapping("/test")
+    @RolesAllowed({"admin"})
+    public String getForTest(Principal principal) {
+        return principal.getName();
+
+    }
+
+    @GetMapping()
+    @RolesAllowed({"viewer"})
+    public List<Post> getAllPosts(Principal principal) {
+        System.out.println(principal);
         // Implement logic to retrieve all posts from the repository
         return (List<Post>) postRepository.findAll();
     }
