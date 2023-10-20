@@ -1,0 +1,24 @@
+services:
+  keycloak_server:
+    image: quay.io/keycloak/keycloak:22.0.4
+    command: start-dev
+    environment:
+      KC_BD: mysql
+      KC_DB_URL_HOST: mysql_keycloak
+      KC_DB_URL_DATABASE: keyclaok
+      KC_DB_PASSWORD: root
+      KC_DB_USERNAME: root
+      KC_DB_SCHEMA: public
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8890:8080"
+    depends_on:
+      mysql_keycloak:
+        condition: service_healthy
+    networks:
+      - keycloak_dev_network
+
+    mysql_keycloak:
+      image: mysql:12.2
+
