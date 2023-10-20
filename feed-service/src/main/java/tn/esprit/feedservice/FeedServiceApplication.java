@@ -29,11 +29,11 @@ public class FeedServiceApplication implements CommandLineRunner {
 	IPostRepository postRepository;
 
 
-	private final UserRestFeignClientService userRestFeignClientService;
-
-	public FeedServiceApplication(UserRestFeignClientService userRestFeignClientService) {
-		this.userRestFeignClientService = userRestFeignClientService;
-	}
+//	private final UserRestFeignClientService userRestFeignClientService;
+//
+//	public FeedServiceApplication(UserRestFeignClientService userRestFeignClientService) {
+//		this.userRestFeignClientService = userRestFeignClientService;
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(FeedServiceApplication.class, args);
@@ -45,9 +45,7 @@ public class FeedServiceApplication implements CommandLineRunner {
 		Post post1 = new Post(null,"test post",null,null,null,null,null,null,null);
 		postRepository.save(post1);
 
-		User u = userRestFeignClientService.findById("652e9c0148ab2146dc2c51f2");
 
-		System.out.println(u);
 
 	}
 
