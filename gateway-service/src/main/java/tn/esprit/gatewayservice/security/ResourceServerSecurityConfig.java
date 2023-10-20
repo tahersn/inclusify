@@ -30,6 +30,7 @@ public class ResourceServerSecurityConfig {
                 .and()
                 .oauth2Login()
                 .and()
+                .csrf().disable()
                 .logout().logoutSuccessHandler(handler);
 
         return httpSecurity.build();
