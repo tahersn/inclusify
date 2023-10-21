@@ -38,12 +38,12 @@ Use Eureka for service registration and discovery.
 API Endpoints
 Here are some of the main API endpoints for each service:
 
-Event Service: /events
-Feed Service: /feeds
-Job Service: /jobs
-Marketplace Service: /marketplace
-Skill Service: /skills
-User Service: /users
+Event Service: /events<br>
+Feed Service: /feeds<br>
+Job Service: /jobs<br>
+Marketplace Service: /marketplace<br>
+Skill Service: /skills<br>
+User Service: /users<br>
 For detailed API documentation, you can explore each service's Swagger UI.
 
 # Additional Resources
