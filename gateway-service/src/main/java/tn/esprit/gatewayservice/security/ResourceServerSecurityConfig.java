@@ -28,7 +28,10 @@ public class ResourceServerSecurityConfig {
     @Bean
     public SecurityWebFilterChain configureResourceServer(ServerHttpSecurity httpSecurity, ServerLogoutSuccessHandler handler) throws Exception {
 
-        httpSecurity.authorizeExchange().pathMatchers("/actuator/health/**","/nodejs-service/api-docs/**","/login**","/nodejs-service/users/**").permitAll()
+        httpSecurity.
+
+                authorizeExchange().pathMatchers("/actuator/health/**","/nodejs-service/api-docs/**","/login**","/nodejs-service/users/**","api-docs/**","/feed-service/swagger-ui.html").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS,"/feed-service/posts/**").permitAll()
                 .and()
                 .authorizeExchange().anyExchange().authenticated()
                 .and()
@@ -36,7 +39,8 @@ public class ResourceServerSecurityConfig {
                 .and()
                 .csrf().disable()
                 .cors().disable()
-                .logout().logoutSuccessHandler(handler);
+                .logout().logoutSuccessHandler(handler).and().oauth2ResourceServer().jwt();
+
 
         return httpSecurity.build();
     }
@@ -51,19 +55,6 @@ public class ResourceServerSecurityConfig {
         return oidcClientInitiatedServerLogoutSuccessHandler;
     }
 
-//    @Bean
-//    public CorsWebFilter corsWebFilter() {
-//        CorsConfiguration corsConfig = new CorsConfiguration();
-//        corsConfig.addAllowedOrigin("*");
-//        corsConfig.addAllowedHeader("*");
-//        corsConfig.addAllowedMethod("*");
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
-//        source.registerCorsConfiguration("/**", corsConfig);
-//
-//        return new CorsWebFilter(source);
-//    }
-
     @Bean
     public CorsWebFilter corsFilter() {
         return new CorsWebFilter(corsConfigurationSource());
@@ -73,9 +64,8 @@ public class ResourceServerSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
-        config.setAllowedOrigins(Collections.singletonList("*")); // Allow any origin for preflight requests
+        config.setAllowedOrigins(Collections.singletonList("http://localhost:5000")); // Allow any origin for preflight requests
 
-        config.addAllowedOrigin("*");
         config.addAllowedMethod(HttpMethod.PUT);
         config.addAllowedMethod(HttpMethod.DELETE);
         config.addAllowedMethod(HttpMethod.POST);

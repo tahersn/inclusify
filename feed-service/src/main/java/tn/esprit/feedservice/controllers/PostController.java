@@ -14,6 +14,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/posts")
+//@CrossOrigin("http://localhost:5000")
 public class PostController {
     private final IPostRepository postRepository;
 
@@ -23,14 +24,16 @@ public class PostController {
     }
 
     @GetMapping("/test")
-    @RolesAllowed({"admin"})
+//    @RolesAllowed({"admin"})
+    @PermitAll()
     public String getForTest(Principal principal) {
         return principal.getName();
 
     }
 
     @GetMapping()
-    @RolesAllowed({"viewer"})
+//    @RolesAllowed({"viewer"})
+    @PermitAll()
     public List<Post> getAllPosts(Principal principal) {
         System.out.println(principal);
         // Implement logic to retrieve all posts from the repository
