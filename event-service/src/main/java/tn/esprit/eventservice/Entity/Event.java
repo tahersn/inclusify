@@ -1,10 +1,12 @@
 package tn.esprit.eventservice.Entity;
 
 import javax.persistence.*;
+import java.io.File;
 import java.util.*;
 
-import tn.esprit.eventservice.Entity.CategoryEvent;
-import tn.esprit.eventservice.Model.User;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Event {
@@ -15,35 +17,37 @@ public class Event {
     private String name;
     private String description;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String location;
+    private String meet;
 
     @Column(name = "organizer")
     private String organizer;
-
 
     @Enumerated(EnumType.STRING)
     private StatusEvent status;
 
     private Integer capacity;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registrationDeadline;
 
     private String image;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date creationDate;
-
 
     @ElementCollection
     @CollectionTable(name = "event_attendees", joinColumns = @JoinColumn(name = "event_id"))
     @Column(name = "attendee_id")
     private List<String> attendeeIds;
 
-
+    @ElementCollection
+    @CollectionTable(name = "event_attendee_emails", joinColumns = @JoinColumn(name = "event_id"))
+    @Column(name = "attendee_email")
+    private List<String> attendeeEmails;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -88,7 +92,8 @@ public class Event {
         return registrationDeadline;
     }
 
-    public String getImage() {
+
+    public String  getImage() {
         return image;
     }
 
@@ -104,7 +109,15 @@ public class Event {
         return category;
     }
 
-    //setters
+    public List<String> getAttendeeIds() {
+        return attendeeIds;
+    }
+
+    public List<String> getAttendeeEmails() {
+        return attendeeEmails;
+    }
+
+//setters
 
     public void setName(String name) {
         this.name = name;
@@ -134,7 +147,8 @@ public class Event {
         this.registrationDeadline = registrationDeadline;
     }
 
-    public void setImage(String image) {
+
+    public void setImage(String  image) {
         this.image = image;
     }
 
@@ -142,12 +156,12 @@ public class Event {
         this.creationDate = creationDate;
     }
 
-    public void setAttendeeIds(Set<String> attendeeIds) {
-        this.attendeeIds = new ArrayList<>(attendeeIds);
-    }
-
     public void setCategory(CategoryEvent category) {
         this.category = category;
+    }
+
+    public void setAttendeeIds(List<String> attendeeIds) {
+        this.attendeeIds = attendeeIds;
     }
 
     // Constructors
@@ -155,8 +169,8 @@ public class Event {
     public Event() {
     }
 
-
-    public Event(String name, String description, Date date, String location, String organizer, StatusEvent status, int capacity, Date registrationDeadline, String image, Date creationDate, List<String> attendeeIds, CategoryEvent category) {
+    public Event(Integer id, String name, String description, Date date, String location, String organizer, StatusEvent status, Integer capacity, Date registrationDeadline, String image, Date creationDate, List<String> attendeeIds, CategoryEvent category) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
@@ -170,4 +184,27 @@ public class Event {
         this.attendeeIds = attendeeIds;
         this.category = category;
     }
+
+    public Event(String name, String description, Date date, String location, String organizer, StatusEvent status, int capacity, Date registrationDeadline, Date creationDate, List<String> attendeeIds, CategoryEvent category) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+        this.location = location;
+        this.organizer = organizer;
+        this.status = status;
+        this.capacity = capacity;
+        this.registrationDeadline = registrationDeadline;
+        this.creationDate = creationDate;
+        this.attendeeIds = attendeeIds;
+        this.category = category;
+    }
+
+    public String getMeet() {
+        return meet;
+    }
+
+    public void setMeet(String meet) {
+        this.meet = meet;
+    }
+
 }
