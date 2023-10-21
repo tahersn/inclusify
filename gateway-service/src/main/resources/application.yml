@@ -3,6 +3,13 @@ spring:
     gateway:
       default-filters:
         - TokenRelay
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
 #      routes:
 #        - id: feed-service
 #          uri: http://localhost:8090
@@ -14,7 +21,6 @@ spring:
       client:
         provider:
           my-keycloak-provider:
-
             issuer-uri: http://localhost:8181/realms/inclusify-ms-realm
         registration:
           keycloak-spring-gateway-client:
@@ -22,5 +28,10 @@ spring:
             provider: my-keycloak-provider
             client-id: ms-auth
             client-secret: prloMH0NZEbr8aNYR3UZBfUCrsT2T56p
-            authorization-grant-type: authorization_code
+            authorization-grant-type: password_credentials
             redirect-uri: 'http://localhost:9999/login/oauth2/code/keycloak'
+
+
+
+
+
