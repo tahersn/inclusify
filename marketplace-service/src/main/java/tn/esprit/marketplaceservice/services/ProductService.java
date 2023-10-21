@@ -2,13 +2,24 @@ package tn.esprit.marketplaceservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.marketplaceservice.entities.Category;
 import tn.esprit.marketplaceservice.entities.Product;
 import tn.esprit.marketplaceservice.repositories.ProductRepository;
+
+import java.util.List;
 
 @Service
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    public List<Product> getProducts() {
+        return productRepository.findAll();
+    }
+
+    public Product getProduct(int id) {
+        return productRepository.findById(id).orElse(null);
+    }
 
     public Product addProduct(Product product){
         return productRepository.save(product);
@@ -22,7 +33,7 @@ public class ProductService {
             existingProduct.setImage(newProduct.getImage());
             existingProduct.setQuantity(newProduct.getQuantity());
             existingProduct.setPrice(newProduct.getPrice());
-            existingProduct.setCategories(newProduct.getCategories());
+            existingProduct.setCategory(newProduct.getCategory());
             return productRepository.save(existingProduct);
         }
         else

@@ -5,8 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.marketplaceservice.entities.Category;
 import tn.esprit.marketplaceservice.entities.Product;
 import tn.esprit.marketplaceservice.services.ProductService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -15,6 +18,16 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Product> getProducts() {
+        return productService.getProducts();
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Product> getProduct(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
     @ResponseStatus(HttpStatus.CREATED)

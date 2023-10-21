@@ -1,11 +1,9 @@
 package tn.esprit.marketplaceservice.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Category implements Serializable {
@@ -14,8 +12,8 @@ public class Category implements Serializable {
     @GeneratedValue
     private int id;
     private String name,description;
-    @ManyToMany
-    Set<Product> products;
+    @OneToMany
+    private List<Product> products;
 
     public int getId() {
         return id;
@@ -37,11 +35,11 @@ public class Category implements Serializable {
         this.description = description;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
@@ -55,7 +53,7 @@ public class Category implements Serializable {
         this.description = description;
     }
 
-    public Category(String name, String description, Set<Product> products) {
+    public Category(String name, String description, List<Product> products) {
         super();
         this.name = name;
         this.description = description;

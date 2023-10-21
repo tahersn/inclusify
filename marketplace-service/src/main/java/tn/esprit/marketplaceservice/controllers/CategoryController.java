@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.marketplaceservice.entities.Category;
 import tn.esprit.marketplaceservice.services.CategoryService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/Category")
@@ -20,6 +21,16 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Category> getCategories() {
+        return categoryService.getCategories();
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Category> getCategory(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(categoryService.getCategory(id), HttpStatus.OK);
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
     @ResponseStatus(HttpStatus.CREATED)

@@ -19,8 +19,8 @@ public class Product implements Serializable {
     @Transient
     private User publisher;
     private int UserId;
-    @ManyToMany
-    Set<Category> categories;
+    @ManyToOne
+    private Category category;
 
     public int getId() {
         return id;
@@ -66,12 +66,12 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Product() {
@@ -85,6 +85,6 @@ public class Product implements Serializable {
         this.image = image;
         this.quantity = quantity;
         this.price = price;
-        this.categories = categories;
+        this.category = category;
     }
 }
