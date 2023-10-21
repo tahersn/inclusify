@@ -8,12 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.skillservice.services.SkillService;
 import tn.esprit.skillservice.entities.Skill;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/skill")
 public class SkillRestAPI {
 
     @Autowired
     private SkillService skillService;
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Skill> getSkills() {
+        return skillService.getSkills();
+    }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Skill> getSkill(@PathVariable(value = "id") int id) {
@@ -22,8 +29,8 @@ public class SkillRestAPI {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Skill> createSkill(@RequestBody Skill skill) {
-        return new ResponseEntity<>(skillService.addSkill(skill), HttpStatus.OK);
+    public Skill createSkill(@RequestBody Skill skill) {
+        return skillService.addSkill(skill);
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

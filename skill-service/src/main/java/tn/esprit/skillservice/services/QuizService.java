@@ -19,7 +19,6 @@ public class QuizService {
             Quiz existingQuiz = quizRepository.findById(id).get();
             existingQuiz.setSkill(newQuiz.getSkill());
             existingQuiz.setQuestions(newQuiz.getQuestions());
-            existingQuiz.setDateCreated(newQuiz.getDateCreated());
             existingQuiz.setScore(newQuiz.getScore());
             existingQuiz.setSuccessful(newQuiz.isSuccessful());
             return quizRepository.save(existingQuiz);

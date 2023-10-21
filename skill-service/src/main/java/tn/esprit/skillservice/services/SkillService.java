@@ -5,16 +5,19 @@ import org.springframework.stereotype.Service;
 import tn.esprit.skillservice.entities.Skill;
 import tn.esprit.skillservice.repositories.SkillRepository;
 
+import java.util.List;
+
 @Service
 public class SkillService {
     @Autowired
     private SkillRepository skillRepository;
 
+    public List<Skill> getSkills(){
+        return skillRepository.findAll();
+    }
+
     public Skill getSkill(int id){
-        if (skillRepository.findById(id).isPresent())
-            return skillRepository.findById(id).get();
-        else
-            return null;
+        return skillRepository.findById(id).orElse(null);
     }
 
     public Skill addSkill(Skill skill){
@@ -26,7 +29,7 @@ public class SkillService {
             Skill existingSkill = skillRepository.findById(id).get();
             existingSkill.setName(newSkill.getName());
             existingSkill.setQuestions(newSkill.getQuestions());
-            existingSkill.setQuiz(newSkill.getQuiz());
+            existingSkill.setQuizzes(newSkill.getQuizzes());
             return skillRepository.save(existingSkill);
         }
         else

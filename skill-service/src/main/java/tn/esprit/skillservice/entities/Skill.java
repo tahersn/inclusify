@@ -1,5 +1,6 @@
 package tn.esprit.skillservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,24 +20,30 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Skill implements Serializable{
+public class Skill implements Serializable {
     private static final long serialVersionUID = 223654789L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
-    private String name ;
+    private int id;
+    private String name;
 
     @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Question> questions;
 
     @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
-    private List<Quiz> quiz;
+    @JsonIgnore
+    private List<Quiz> quizzes;
 
     @CreationTimestamp
     private Timestamp createdAt;
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    public Skill(String name) {
+        this.name = name;
+    }
 }

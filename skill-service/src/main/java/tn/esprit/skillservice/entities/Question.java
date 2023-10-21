@@ -22,9 +22,9 @@ public class Question implements Serializable {
     private static final long serialVersionUID = 223654789L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
     private String description;
 
     @ManyToMany(mappedBy = "questions")
@@ -41,4 +41,9 @@ public class Question implements Serializable {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+
+    public Question(String description, Skill skill) {
+        this.description = description;
+        this.skill = skill;
+    }
 }

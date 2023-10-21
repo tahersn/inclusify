@@ -22,9 +22,9 @@ public class Quiz implements Serializable {
     private static final long serialVersionUID = 223654759L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @ManyToOne
     private Skill skill;
@@ -36,8 +36,6 @@ public class Quiz implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "question_id")
     )
     private List<Question> questions;
-
-    private Date dateCreated;
 
     private int score;
     private boolean isSuccessful;
@@ -52,4 +50,11 @@ public class Quiz implements Serializable {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    public Quiz(Skill skill, int score, boolean isSuccessful, String user_id) {
+        this.skill = skill;
+        this.score = score;
+        this.isSuccessful = isSuccessful;
+        this.user_id = user_id;
+    }
 }

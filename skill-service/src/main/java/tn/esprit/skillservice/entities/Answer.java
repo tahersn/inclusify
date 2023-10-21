@@ -1,5 +1,6 @@
 package tn.esprit.skillservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,13 +19,19 @@ public class Answer implements Serializable {
     private static final long serialVersionUID = 213654789L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
     private String text;
     private boolean isCorrect;
 
     @ManyToOne
+    @JsonIgnore
     private Question question;
 
+    public Answer(String text, boolean isCorrect, Question question) {
+        this.text = text;
+        this.isCorrect = isCorrect;
+        this.question = question;
+    }
 }
