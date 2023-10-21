@@ -3,17 +3,16 @@ package tn.esprit.eventservice.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.eventservice.Entity.CategoryEvent;
-import tn.esprit.eventservice.Repository.CategoryRespository;
+import tn.esprit.eventservice.Repository.CategoryRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
-    private CategoryRespository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @GetMapping
     public List<CategoryEvent> getAllCategories() {

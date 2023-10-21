@@ -18,5 +18,4 @@ public interface UserRestFeignClientService {
     @GetMapping("/users/{idUser}")
     public User findById(@PathVariable String idUser);
 
-
 }

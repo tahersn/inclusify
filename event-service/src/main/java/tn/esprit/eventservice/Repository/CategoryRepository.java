@@ -5,6 +5,6 @@ import tn.esprit.eventservice.Entity.CategoryEvent;
 
 import java.util.List;
 
-public interface CategoryRespository extends JpaRepository<CategoryEvent, Integer> {
+public interface CategoryRepository extends JpaRepository<CategoryEvent, Integer> {
     List<CategoryEvent> findAll();
 }
