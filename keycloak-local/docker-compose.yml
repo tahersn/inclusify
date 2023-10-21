@@ -36,7 +36,6 @@ services:
     networks:
       - demo-network
 
-
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.4
     ports:
