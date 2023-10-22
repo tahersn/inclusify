@@ -24,16 +24,16 @@ public class PostController {
     }
 
     @GetMapping("/test")
-//    @RolesAllowed({"admin"})
-    @PermitAll()
+    @RolesAllowed({"viewer"})
+//    @PermitAll()
     public String getForTest(Principal principal) {
-        return principal.getName();
-
+//        return principal.getName();
+        return "A full string for test";
     }
 
     @GetMapping()
-//    @RolesAllowed({"viewer"})
-    @PermitAll()
+    @RolesAllowed({"admin"})
+//    @PermitAll()
     public List<Post> getAllPosts(Principal principal) {
         System.out.println(principal);
         // Implement logic to retrieve all posts from the repository
