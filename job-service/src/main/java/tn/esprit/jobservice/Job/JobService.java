@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class JobService {
     @Autowired
@@ -50,6 +52,11 @@ public class JobService {
     }
     public Page<Job> getJobsByTitle(String title, Pageable pageable) {
         return jobRepository.JobByTitle(title, pageable);
+    }
+
+    //get all jobs
+    public List<Job> getAllJobs() {
+        return jobRepository.findAll();
     }
 
 }

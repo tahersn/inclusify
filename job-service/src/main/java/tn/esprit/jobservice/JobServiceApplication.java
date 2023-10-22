@@ -11,12 +11,15 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tn.esprit.jobservice.Job.Job;
 import tn.esprit.jobservice.Job.JobRepository;
 import tn.esprit.jobservice.JobApplication.JobApplication;
 import tn.esprit.jobservice.JobApplication.JobApplicationRepo;
 import tn.esprit.jobservice.feign.UserRestService;
 import tn.esprit.jobservice.model.User;
+
 
 import static tn.esprit.jobservice.JobApplication.ApplicationStatus.PENDING;
 import static tn.esprit.jobservice.JobApplication.ApplicationStatus.REJECTED;
@@ -54,6 +57,18 @@ public class JobServiceApplication {
 
 			jobApplicationRepo.save(new JobApplication("motivation",jobRepository.findById(Long.valueOf(1)).get(),"652e9c0148ab2146dc2c51f2","C:/inclusify_resumes/cv.pdf",PENDING));
 
+		};
+	}
+	@Bean
+	public static WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:5000")
+						.allowedMethods("GET", "POST", "PUT", "DELETE")
+						.allowedHeaders("*");
+			}
 		};
 	}
 }

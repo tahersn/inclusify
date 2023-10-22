@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/job")
 public class JobRestAPI {
@@ -37,6 +39,15 @@ public class JobRestAPI {
     @GetMapping("/byTitle")
     public ResponseEntity<Page<Job>> getJobsByTitle(@RequestParam("title") String title, Pageable pageable) {
         Page<Job> jobs = jobService.getJobsByTitle(title, pageable);
+        if (!jobs.isEmpty()) {
+            return ResponseEntity.ok(jobs);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<Job>> getAllJobs() {
+        List<Job> jobs = jobService.getAllJobs();
         if (!jobs.isEmpty()) {
             return ResponseEntity.ok(jobs);
         } else {
