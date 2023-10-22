@@ -10,7 +10,7 @@ import tn.esprit.marketplaceservice.services.CategoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Category")
+@RequestMapping("/category")
 public class CategoryController {
     private String title="Hello, I'm the Marketplace/Category Microservice";
     @RequestMapping("/hello")
