@@ -17,4 +17,17 @@ router.put("/:userId", UserController.updateUser);
 // Delete a specific user by ID
 router.delete("/:userId", UserController.deleteUser);
 
+router.post("/login", UserController.login);
+
+router.post("/checkEmail", UserController.checkIfEmailExist);
+
+//router.post("/editProfile/:id", multerImg.single("profileImage"), userController.modifyUser);
+
+router.get("/verify/:token", UserController.verifyUser);
+
+
+
+router.get("/byId/:id", UserController.getUserById);
+
+
 module.exports = router;
