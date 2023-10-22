@@ -3,6 +3,7 @@ package tn.esprit.feedservice.controllers;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.feedservice.entities.*;
+import tn.esprit.feedservice.feign.*;
 import tn.esprit.feedservice.repositories.*;
 
 import javax.annotation.security.*;
@@ -18,14 +19,17 @@ import java.util.*;
 public class PostController {
     private final IPostRepository postRepository;
 
+
+    private final UserRestFeignClientService userRestFeignClientService;
+
     @Autowired
-    public PostController(IPostRepository postRepository) {
+    public PostController(IPostRepository postRepository, UserRestFeignClientService userRestFeignClientService) {
         this.postRepository = postRepository;
+        this.userRestFeignClientService = userRestFeignClientService;
     }
 
     @GetMapping("/test")
     @RolesAllowed({"viewer"})
-//    @PermitAll()
     public String getForTest(Principal principal) {
 //        return principal.getName();
         return "A full string for test";
@@ -35,9 +39,15 @@ public class PostController {
     @RolesAllowed({"admin"})
 //    @PermitAll()
     public List<Post> getAllPosts(Principal principal) {
-        System.out.println(principal);
-        // Implement logic to retrieve all posts from the repository
-        return (List<Post>) postRepository.findAll();
+
+        List<Post> posts = (List<Post>) postRepository.findAll();
+        posts.forEach(post -> {
+            if (!(post.getUserId() == null)) {
+                post.setUser(userRestFeignClientService.findById(post.getUserId()));
+            }
+        });
+
+        return posts;
     }
 
     @GetMapping("/{id}")

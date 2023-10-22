@@ -21,7 +21,7 @@ import java.util.*;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String description;
@@ -29,20 +29,18 @@ public class Post {
     @ElementCollection
     private List<String> images;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
     @Enumerated(EnumType.STRING)
     private PostType postTypeEnum = PostType.ANNOUNCEMENT;
 
-//    @ManyToOne
-//    @JoinColumn(name = "job_id")
-//    private Job job;
-
     @Transient
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private String userId;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<React> reacts;
 
     @CreationTimestamp

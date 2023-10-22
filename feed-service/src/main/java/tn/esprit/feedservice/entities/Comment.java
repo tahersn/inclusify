@@ -1,6 +1,7 @@
 package tn.esprit.feedservice.entities;
 
 import lombok.*;
+import tn.esprit.feedservice.model.*;
 
 import javax.persistence.*;
 
@@ -23,4 +24,9 @@ public class Comment {
 
     @Column(nullable = false)
     private String comment;
+
+    @Transient
+    private User user;
+
+    private String userId;
 }
