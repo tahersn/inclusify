@@ -29,7 +29,7 @@ public class EventServiceApplication {
 		SpringApplication.run(EventServiceApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
@@ -39,7 +39,7 @@ public class EventServiceApplication {
 		config.addAllowedMethod("*");
 		source.registerCorsConfiguration("/**", config);
 		return new CorsFilter(source);
-	}
+	}*/
 
 	@Bean
 	ApplicationRunner init(EventRepository eventRepository, CategoryRepository categoryRepository) {
