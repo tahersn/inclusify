@@ -23,7 +23,7 @@ public class PostController {
     private final UserRestFeignClientService userRestFeignClientService;
 
     @Autowired
-    public PostController(IPostRepository postRepository,UserRestFeignClientService userRestFeignClientService) {
+    public PostController(IPostRepository postRepository, UserRestFeignClientService userRestFeignClientService) {
         this.postRepository = postRepository;
         this.userRestFeignClientService = userRestFeignClientService;
     }
@@ -40,14 +40,14 @@ public class PostController {
 //    @PermitAll()
     public List<Post> getAllPosts(Principal principal) {
 
- List<Post> posts = (List<Post>) postRepository.findAll();
- posts.forEach(post -> {
-     if(!post.getUserId().isEmpty()){
-         post.setUser(userRestFeignClientService.findById(post.getUserId()));
-     }
- });
+        List<Post> posts = (List<Post>) postRepository.findAll();
+        posts.forEach(post -> {
+            if (!(post.getUserId() == null)) {
+                post.setUser(userRestFeignClientService.findById(post.getUserId()));
+            }
+        });
 
- return posts;
+        return posts;
     }
 
     @GetMapping("/{id}")
