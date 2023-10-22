@@ -29,9 +29,9 @@ public class ResourceServerSecurityConfig {
     public SecurityWebFilterChain configureResourceServer(ServerHttpSecurity httpSecurity, ServerLogoutSuccessHandler handler) throws Exception {
 
         httpSecurity.
-
                 authorizeExchange().pathMatchers("/actuator/health/**",
                         "/nodejs-service/api-docs/**",
+                        "/skill-service/**",
                         "/h2-console",
                         "/login**",
                         "/nodejs-service/users/**",

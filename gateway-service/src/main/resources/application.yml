@@ -15,6 +15,10 @@ spring:
           predicates:
             - Path=/posts/**
             - Path=/comments/**
+        - id: skill-service
+          uri: http://localhost:8093
+          predicates:
+            - Path=/**
 
   security:
     oauth2:
