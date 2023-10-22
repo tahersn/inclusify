@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.marketplaceservice.entities.Category;
 import tn.esprit.marketplaceservice.entities.Product;
+import tn.esprit.marketplaceservice.feign.UserRestFeignClientService;
+import tn.esprit.marketplaceservice.model.User;
 import tn.esprit.marketplaceservice.services.ProductService;
 
 import java.util.List;
@@ -19,12 +21,20 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserRestFeignClientService userFeign;
+
+    @GetMapping(value = "/u", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getU() {
+        return userFeign.findAll();
+    }
+
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getProducts() {
         return productService.getProducts();
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Product> getProduct(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
     }

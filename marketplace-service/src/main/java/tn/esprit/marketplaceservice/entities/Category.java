@@ -1,7 +1,7 @@
 package tn.esprit.marketplaceservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -21,6 +21,7 @@ public class Category implements Serializable {
     private int id;
     private String name,description;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Product> products;
 
     public Category(String name, String description) {
