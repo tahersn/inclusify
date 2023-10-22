@@ -17,12 +17,17 @@ public class QuestionRestAPI {
     @Autowired
     private QuestionService questionService;
 
+    @GetMapping(value = "/bySkill/{skillId}")
+    public List<Question> getQuestionsBySkill(@PathVariable(value = "skillId") int skillId) {
+        return questionService.getQuestionsBySkill(skillId);
+    }
+
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Question> getQuestions() {
         return questionService.getQuestions();
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/byId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Question> getQuestion(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(questionService.getQuestion(id), HttpStatus.OK);
     }

@@ -37,7 +37,7 @@ public class Quiz implements Serializable {
     )
     private List<Question> questions;
 
-    private int score;
+    private float score;
     private boolean isSuccessful;
     private String user_id;
 

@@ -1,6 +1,7 @@
 package tn.esprit.skillservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import tn.esprit.skillservice.entities.Question;
 import tn.esprit.skillservice.entities.Skill;
@@ -12,6 +13,11 @@ import java.util.List;
 public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
+
+    public List<Question> getQuestionsBySkill(int skillId) {
+        return questionRepository.getQuestionsBySkill(skillId, PageRequest.of(0,3));
+    }
+
 
     public List<Question> getQuestions() {
         return questionRepository.findAll();

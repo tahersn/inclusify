@@ -4,6 +4,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,6 +17,7 @@ import tn.esprit.skillservice.services.QuizService;
 import tn.esprit.skillservice.services.SkillService;
 
 @SpringBootApplication
+@EnableFeignClients
 public class SkillServiceApplication {
 
 	public static void main(String[] args) {
@@ -75,6 +77,7 @@ public class SkillServiceApplication {
 		};
 	}
 
+	/*
 	@Bean
 	public static WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
@@ -86,5 +89,5 @@ public class SkillServiceApplication {
 						.allowedHeaders("*");
 			}
 		};
-	}
+	}*/
 }

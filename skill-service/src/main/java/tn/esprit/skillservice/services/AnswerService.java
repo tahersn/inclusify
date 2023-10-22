@@ -10,6 +10,8 @@ public class AnswerService {
     @Autowired
     private AnswerRepository answerRepository;
 
+    public Answer getAnswerById(int id){ return answerRepository.findById(id).orElse(null);}
+
     public Answer addAnswer(Answer answer){
         return answerRepository.save(answer);
     }

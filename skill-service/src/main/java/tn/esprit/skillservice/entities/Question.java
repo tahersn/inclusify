@@ -1,5 +1,6 @@
 package tn.esprit.skillservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,6 +29,7 @@ public class Question implements Serializable {
     private String description;
 
     @ManyToMany(mappedBy = "questions")
+    @JsonIgnore
     private List<Quiz> quizzes;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers;

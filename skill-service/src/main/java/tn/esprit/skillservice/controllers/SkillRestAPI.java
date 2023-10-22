@@ -5,9 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.skillservice.feign.UserRestFeignClientService;
+import tn.esprit.skillservice.models.SkillListItem;
+import tn.esprit.skillservice.models.User;
 import tn.esprit.skillservice.services.SkillService;
 import tn.esprit.skillservice.entities.Skill;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @RestController
@@ -17,12 +21,16 @@ public class SkillRestAPI {
     @Autowired
     private SkillService skillService;
 
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Skill> getSkills() {
-        return skillService.getSkills();
+    @Autowired
+    private UserRestFeignClientService userRestFeignClientService;
+
+    @GetMapping(value = "/list/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SkillListItem> getSkills(@PathVariable(value = "userId") String userId) {
+        //return userRestFeignClientService.findAll();
+        return skillService.getSkills(userId);
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/byId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Skill> getSkill(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(skillService.getSkill(id), HttpStatus.OK);
     }

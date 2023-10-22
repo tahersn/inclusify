@@ -43,6 +43,9 @@ public class Skill implements Serializable {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    public Skill(int id) {
+        this.id = id;
+    }
     public Skill(String name) {
         this.name = name;
     }
