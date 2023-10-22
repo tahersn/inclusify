@@ -30,8 +30,15 @@ public class ResourceServerSecurityConfig {
 
         httpSecurity.
 
-                authorizeExchange().pathMatchers("/actuator/health/**","/nodejs-service/api-docs/**","/login**","/nodejs-service/users/**","api-docs/**","/feed-service/swagger-ui.html").permitAll()
-                .pathMatchers(HttpMethod.OPTIONS,"/feed-service/posts/**", "/event-service/event/**").permitAll()
+                authorizeExchange().pathMatchers("/actuator/health/**",
+                        "/nodejs-service/api-docs/**",
+                        "/skill-service/**",
+                        "/h2-console",
+                        "/login**",
+                        "/nodejs-service/users/**",
+                        "api-docs/**",
+                        "/feed-service/swagger-ui.html").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS,"/feed-service/**","/event-service/event/**").permitAll()
                 .and()
                 .authorizeExchange().anyExchange().authenticated()
                 .and()

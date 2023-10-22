@@ -20,6 +20,8 @@ public class React {
     @Transient
     private User user;
 
+    private String userId;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
