@@ -30,10 +30,10 @@ public class QuizRestAPI {
         return quizService.getQuizById(quizId);
     }
 
-    @PostMapping(value = "/generateQuizBySkill/{skillId}")
+    @PostMapping(value = "/generateQuizBySkill/{skillId}/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Quiz generateQuizBySkill(@PathVariable(value = "skillId") int skillId ) {
-        return quizService.generateQuizBySkill(new Skill(skillId));
+    public Quiz generateQuizBySkill(@PathVariable(value = "skillId") int skillId, @PathVariable(value = "userId") String userId ) {
+        return quizService.generateQuizBySkill(new Skill(skillId), userId);
     }
 
     @PostMapping(value = "/submitQuiz/{quizId}")

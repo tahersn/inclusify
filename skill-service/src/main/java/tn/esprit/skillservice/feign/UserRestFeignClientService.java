@@ -15,6 +15,6 @@ public interface UserRestFeignClientService {
     @GetMapping("/users")
     public List<User> findAll();
 
-    @GetMapping("/users/{idUser}")
+    @GetMapping("/users/byId/{idUser}")
     public User findById(@PathVariable String idUser);
 }

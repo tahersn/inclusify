@@ -13,6 +13,7 @@ import tn.esprit.skillservice.entities.Skill;
 
 import javax.annotation.security.PermitAll;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/skill")
@@ -21,13 +22,11 @@ public class SkillRestAPI {
     @Autowired
     private SkillService skillService;
 
-    @Autowired
-    private UserRestFeignClientService userRestFeignClientService;
-
-    @GetMapping(value = "/list/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SkillListItem> getSkills(@PathVariable(value = "userId") String userId) {
-        //return userRestFeignClientService.findAll();
-        return skillService.getSkills(userId);
+    @GetMapping(value = {"/list","/list/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SkillListItem> getSkills(@PathVariable(value = "userId") Optional<String> userId) {
+        if (userId.isPresent())
+            return skillService.getSkillItems(userId.get());
+        else return skillService.getSkills();
     }
 
     @GetMapping(value = "/byId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

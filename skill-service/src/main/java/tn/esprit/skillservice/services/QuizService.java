@@ -7,6 +7,7 @@ import tn.esprit.skillservice.entities.Answer;
 import tn.esprit.skillservice.entities.Question;
 import tn.esprit.skillservice.entities.Quiz;
 import tn.esprit.skillservice.entities.Skill;
+import tn.esprit.skillservice.feign.UserRestFeignClientService;
 import tn.esprit.skillservice.models.QuizAnswer;
 import tn.esprit.skillservice.repositories.QuizRepository;
 
@@ -22,20 +23,26 @@ public class QuizService {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private UserRestFeignClientService userRestFeignClientService;
+
     public Quiz getQuizById(int quizId){return quizRepository.findById(quizId).orElse(null);}
 
     public List<Integer> getQuizSuccessful(String userId){
         return quizRepository.getQuizByUser(userId);
     }
 
-    public Quiz generateQuizBySkill(Skill skill){
+    public Quiz generateQuizBySkill(Skill skill, String userId){
         Quiz quiz = new Quiz();
-        quiz.setSkill(skill);
-        quiz.setScore(0);
-        quiz.setSuccessful(false);
-        quiz.setUser_id("userId");
-        quiz.setQuestions(questionService.getQuestionsBySkill(skill.getId()));
-        return quizRepository.save(quiz);
+        if (userRestFeignClientService.findById(userId)!=null){
+            quiz.setSkill(skill);
+            quiz.setScore(0);
+            quiz.setSuccessful(false);
+            quiz.setUser_id(userId);
+            quiz.setQuestions(questionService.getQuestionsBySkill(skill.getId()));
+            return quizRepository.save(quiz);
+        }
+        return null;
     }
 
     public Quiz submitQuiz(int quizId, QuizAnswer answers){

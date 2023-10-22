@@ -22,7 +22,7 @@ public class QuestionRestAPI {
         return questionService.getQuestionsBySkill(skillId);
     }
 
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Question> getQuestions() {
         return questionService.getQuestions();
     }

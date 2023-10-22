@@ -18,8 +18,19 @@ public class SkillService {
     @Autowired
     private QuizService quizService;
 
-    public List<SkillListItem> getSkills(String userId){
+    public List<SkillListItem> getSkills(){
         List<Skill> skills=skillRepository.findAll();
+        List<SkillListItem> res= new ArrayList<>();
+        for (Skill skill: skills) {
+            SkillListItem item= new SkillListItem();
+            item.setSkill(skill);
+            res.add(item);
+        }
+        return res;
+    }
+
+    public List<SkillListItem> getSkillItems(String userId){
+        List<Skill> skills=skillRepository.getPlayableSkills();
         List<Integer> succSkillsId= quizService.getQuizSuccessful(userId);
         List<SkillListItem> res= new ArrayList<>();
         for (Skill skill: skills) {
