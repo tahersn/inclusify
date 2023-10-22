@@ -42,7 +42,7 @@ public class FeedServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Post post1 = new Post(null,"test post",null,null,null,null,null,null,null);
+		Post post1 = new Post(null,"test post",null,null,null,null,null,null,null,null);
 		postRepository.save(post1);
 
 
