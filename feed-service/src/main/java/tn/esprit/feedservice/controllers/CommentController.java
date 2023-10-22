@@ -7,6 +7,8 @@ import tn.esprit.feedservice.feign.*;
 import tn.esprit.feedservice.model.*;
 import tn.esprit.feedservice.repositories.*;
 
+import javax.annotation.security.*;
+
 /**
  * @author Jozef
  */
@@ -26,6 +28,7 @@ public class CommentController {
     }
 
     @PostMapping("/{postId}")
+    @PermitAll()
     public Comment createComment(@PathVariable Long postId, @RequestBody Comment comment) {
         Post post = postRepository.findById(postId.intValue()).orElse(null);
         if (post == null) {
