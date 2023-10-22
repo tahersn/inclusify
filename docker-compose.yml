@@ -1,18 +1,6 @@
 version: "3.9"
 services:
 
-  Eureka:
-    container_name: eureka-ms
-    build: .\eureka-server-service
-    hostname: serviceregistry
-    ports:
-      - "8761:8761"
-    image: "eureka"
-
-    environment:
-      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
-
-
   Job:
     container_name: job-ms-compose
     build: .\job-service
@@ -29,3 +17,41 @@ services:
     restart: unless-stopped
     depends_on:
       - Eureka
+
+  Event:
+    container_name: event
+    image: "event"
+    build: .\event-service
+    ports:
+      - "8091:8091"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - "Eureka"
+
+  Eureka:
+    container_name: eureka
+    build: .\eureka-server-service
+    hostname: eureka
+    ports:
+      - "8762:8761"
+    image: "eureka"
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka/
+    networks:
+      - mynetwork
+
+
+  db-mysql:
+    image: "mysql:5.6"
+    container_name: db-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3307:3306"
+    restart: unless-stopped
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
