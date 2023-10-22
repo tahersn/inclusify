@@ -220,20 +220,15 @@ exports.getAllUsers = async (req, res, next) => {
   // #swagger.tags = ['User']
   // #swagger.description = 'Find users using the pagination.'
 
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-  const skip = (page - 1) * limit;
+  // const page = parseInt(req.query.page) || 1;
+  // const limit = parseInt(req.query.limit) || 10;
+  // const skip = (page - 1) * limit;
 
   try {
-    const users = await User.find().skip(skip).limit(limit);
-    const count = await User.countDocuments();
+    const users = await User.find()//.skip(skip).limit(limit);
+    // const count = await User.countDocuments();
 
-    res.status(200).json({
-      total: count,
-      page,
-      limit,
-      data: users,
-    });
+    res.status(200).json(users);
   } catch (error) {
     res.status(400).json({error});
   }
