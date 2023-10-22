@@ -2,25 +2,33 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - TokenRelay
-#      routes:
-#        - id: feed-service
-#          uri: http://localhost:8090
-#          predicates:
-#            - Path=/posts/**
+        - TokenRelay=
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5000"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+        - id: feed-service
+          uri: http://localhost:8090
+          predicates:
+            - Path=/posts/**
 
   security:
     oauth2:
       client:
         provider:
           my-keycloak-provider:
-
             issuer-uri: http://localhost:8181/realms/inclusify-ms-realm
         registration:
           keycloak-spring-gateway-client:
             scope: openid
             provider: my-keycloak-provider
             client-id: ms-auth
-            client-secret: prloMH0NZEbr8aNYR3UZBfUCrsT2T56p
+            client-secret: Pcw1mk7ICYFcV1gr2zz7UQrDbRYbBEY0
             authorization-grant-type: authorization_code
-            redirect-uri: 'http://localhost:9999/login/oauth2/code/keycloak'
+            redirect-uri: 'http://localhost:9999/login/oauth2/code/keycloak-spring-gateway-client'
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:8181/realms/inclusify-ms-realm/protocol/openid-connect/certs'
