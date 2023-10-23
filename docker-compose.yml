@@ -1,6 +1,23 @@
 version: "3.9"
 services:
 
+  Job:
+    container_name: job-ms-compose
+    build: .\job-service
+    ports:
+      - "8099:8092"
+    environment:
+      - spring.datasource.url=jdbc:h2:mem:test
+      - spring.datasource.username=sa
+      - spring.datasource.password=password
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+
+
+    image: "job-ms-dock"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+
   Event:
     container_name: event
     image: "event"
