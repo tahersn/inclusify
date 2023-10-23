@@ -8,6 +8,7 @@ import tn.esprit.feedservice.model.*;
 import tn.esprit.feedservice.repositories.*;
 
 import javax.annotation.security.*;
+import java.util.*;
 
 /**
  * @author Jozef
@@ -35,7 +36,19 @@ public class CommentController {
             return null;
         }
 
+        // Add the comment to the post's collection of comments
+        List<Comment> comments = post.getComments();
+        comments.add(comment);
+
+        // Update the post's comments collection
+        post.setComments(comments);
+
+        // Set the post for the comment
         comment.setPost(post);
+
+        if (comment.getUserId() == null) {
+            return null;
+        }
 
         User user = userRestFeignClientService.findById(comment.getUserId());
 
@@ -45,12 +58,29 @@ public class CommentController {
         }
 
         comment.setUser(user);
+
+        // Save the updated post with the new comment
+        postRepository.save(post);
+
+        // Save and return the comment
         return commentRepository.save(comment);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("byId/{id}")
     public Comment getCommentById(@PathVariable Long id) {
+
         return commentRepository.findById(id).orElse(null);
+//        if (c != null) {
+//            Post p = c.getPost();
+//            System.out.println(p);
+//
+//        }
+//        return c;
+    }
+
+    @GetMapping("/")
+    public List<Comment> getAllComment() {
+        return (List<Comment>) commentRepository.findAll();
     }
 
     @PutMapping("/{id}")

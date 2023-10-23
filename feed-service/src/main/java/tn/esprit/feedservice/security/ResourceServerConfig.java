@@ -29,8 +29,9 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-resources/*","/h2-console").permitAll()
-                .and()
+                .antMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-resources/**","/h2-console/**").permitAll()
+                .and().csrf().ignoringAntMatchers("/h2-console/**")
+                .and().headers().frameOptions().disable().and()
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()

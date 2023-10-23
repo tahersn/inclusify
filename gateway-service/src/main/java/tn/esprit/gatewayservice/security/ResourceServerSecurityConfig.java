@@ -32,20 +32,21 @@ public class ResourceServerSecurityConfig {
 
                 authorizeExchange().pathMatchers("/actuator/health/**",
                         "/nodejs-service/api-docs/**",
+                        "/h2-console/**",
                         "/skill-service/**",
-                        "/h2-console",
-                        "/marketplace-service/**",
-                        "/login**",
+                        "/login/**",
                         "/nodejs-service/users/**",
                         "api-docs/**",
                         "/feed-service/swagger-ui.html").permitAll()
                 .pathMatchers(HttpMethod.OPTIONS,"/feed-service/**","/event-service/event/**").permitAll()
+                .and().headers().frameOptions().disable()
                 .and()
                 .authorizeExchange().anyExchange().authenticated()
                 .and()
                 .oauth2Login()
                 .and()
                 .csrf().disable()
+//                .csrf().ignoringAntMatchers("/h2-console/**")
                 .cors().disable()
                 .logout().logoutSuccessHandler(handler).and().oauth2ResourceServer().jwt();
 
@@ -73,11 +74,11 @@ public class ResourceServerSecurityConfig {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
         config.setAllowedOrigins(Collections.singletonList("http://localhost:5000")); // Allow any origin for preflight requests
-
-        config.addAllowedMethod(HttpMethod.PUT);
-        config.addAllowedMethod(HttpMethod.DELETE);
-        config.addAllowedMethod(HttpMethod.POST);
-        config.addAllowedMethod(HttpMethod.GET);
+        config.setAllowedMethods(Collections.singletonList("*"));
+//        config.addAllowedMethod(HttpMethod.PUT);
+//        config.addAllowedMethod(HttpMethod.DELETE);
+//        config.addAllowedMethod(HttpMethod.POST);
+//        config.addAllowedMethod(HttpMethod.GET);
         config.setMaxAge(3600L);
 
         System.out.println(config.getAllowedOrigins());
