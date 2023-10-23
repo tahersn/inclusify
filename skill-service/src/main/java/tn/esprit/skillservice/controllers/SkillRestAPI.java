@@ -29,6 +29,11 @@ public class SkillRestAPI {
         else return skillService.getSkills();
     }
 
+    @GetMapping(value = {"/userSkills/{userId}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Skill> getSkills(@PathVariable(value = "userId") String userId) {
+        return skillService.getSkillsByUser(userId);
+    }
+
     @GetMapping(value = "/byId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Skill> getSkill(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(skillService.getSkill(id), HttpStatus.OK);

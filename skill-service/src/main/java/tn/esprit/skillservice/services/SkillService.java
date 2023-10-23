@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.skillservice.entities.Quiz;
 import tn.esprit.skillservice.entities.Skill;
+import tn.esprit.skillservice.feign.UserRestFeignClientService;
 import tn.esprit.skillservice.models.SkillListItem;
 import tn.esprit.skillservice.repositories.SkillRepository;
 
@@ -17,6 +18,16 @@ public class SkillService {
 
     @Autowired
     private QuizService quizService;
+
+    @Autowired
+    private UserRestFeignClientService userRestFeignClientService;
+
+    public List<Skill> getSkillsByUser(String userId){
+        if (userRestFeignClientService.findById(userId)!=null) {
+            return skillRepository.getSkillByUser(userId);
+        }
+        return new ArrayList<>();
+    }
 
     public List<SkillListItem> getSkills(){
         List<Skill> skills=skillRepository.findAll();

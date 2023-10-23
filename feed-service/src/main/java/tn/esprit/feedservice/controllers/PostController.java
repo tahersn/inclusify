@@ -46,6 +46,28 @@ public class PostController {
     }
 
     @Transactional
+    @GetMapping(value = {"/byUser/{userId}"})
+    public List<Post> getAllPosts(@PathVariable String userId,Principal principal) {
+        if (userRestFeignClientService.findById(userId)!=null){
+        List<Post> posts = (List<Post>) postRepository.getPostsByUser(userId);
+
+        // Fetch comments for each post
+        posts.forEach(post -> {
+            List<Comment> comments = post.getComments();
+            comments.size(); // Trigger lazy loading
+
+            List<React> reacts = post.getReacts();
+            reacts.size(); // Trigger lazy loading
+            if (!(post.getUserId() == null)) {
+                post.setUser(userRestFeignClientService.findById(post.getUserId()));
+            }
+        });
+
+        return posts;}
+        return new ArrayList<>();
+    }
+
+    @Transactional
     @GetMapping()
     @RolesAllowed({"admin"})
     public List<Post> getAllPosts(Principal principal) {
