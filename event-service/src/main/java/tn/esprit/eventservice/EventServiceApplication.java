@@ -1,5 +1,5 @@
 package tn.esprit.eventservice;
-
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
+@EnableFeignClients
 //@ComponentScan(basePackages = "tn.esprit.eventservice")
 public class EventServiceApplication {
 
