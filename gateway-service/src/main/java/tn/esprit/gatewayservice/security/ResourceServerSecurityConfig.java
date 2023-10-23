@@ -38,8 +38,9 @@ public class ResourceServerSecurityConfig {
                         "/login**",
                         "/nodejs-service/users/**",
                         "api-docs/**",
-                        "/feed-service/swagger-ui.html").permitAll()
-                .pathMatchers(HttpMethod.OPTIONS,"/feed-service/**","/event-service/event/**").permitAll()
+                        "/feed-service/swagger-ui.html",
+                        "/event-service/**").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS,"/feed-service/**").permitAll()
                 .and()
                 .authorizeExchange().anyExchange().authenticated()
                 .and()
