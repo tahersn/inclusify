@@ -33,6 +33,7 @@ public class ResourceServerSecurityConfig {
                 authorizeExchange().pathMatchers("/actuator/health/**",
                         "/nodejs-service/api-docs/**",
                         "/h2-console/**",
+                        "/marketplace-service/**",
                         "/skill-service/**",
                         "/login/**",
                         "/nodejs-service/users/**",
