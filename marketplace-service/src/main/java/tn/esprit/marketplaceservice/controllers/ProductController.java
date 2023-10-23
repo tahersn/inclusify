@@ -38,6 +38,10 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
     }
+    @GetMapping(value = "/getByUser/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Product> getProductsByUser(@PathVariable(value = "id") String id) {
+        return productService.getProductsByUser(id);
+    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
