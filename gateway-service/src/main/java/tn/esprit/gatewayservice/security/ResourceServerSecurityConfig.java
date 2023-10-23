@@ -39,6 +39,7 @@ public class ResourceServerSecurityConfig {
                         "/nodejs-service/users/**",
                         "api-docs/**",
                         "/feed-service/swagger-ui.html",
+                        "/feed-service/images/**",
                         "/event-service/**").permitAll()
                 .pathMatchers(HttpMethod.OPTIONS,"/feed-service/**","/job-service/**").permitAll()
                 .and().headers().frameOptions().disable()
