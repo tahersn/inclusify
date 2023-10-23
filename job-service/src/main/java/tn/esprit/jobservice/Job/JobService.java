@@ -59,4 +59,8 @@ public class JobService {
         return jobRepository.findAll();
     }
 
+    public List<Job> getJobsByUserId(String userId) {
+        return jobRepository.getJobsByUser(userId);
+    }
+
 }

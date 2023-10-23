@@ -39,9 +39,6 @@ public class JobApplicationRestAPI {
             String cvFilePath = "c:/inclusify-files/" + cvFile.getOriginalFilename();
             jobApplication.setCvPath(cvFilePath);
 
-
-            // Set the job association and application status
-            //Job job = jobService.getJob(jobId);
             jobApplication.setJob(jobService.getJob(jobId));
             jobApplication.setUser(user);
             jobApplication.setApplicationStatus(applicationStatus);

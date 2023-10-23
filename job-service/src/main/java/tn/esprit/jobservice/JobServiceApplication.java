@@ -49,26 +49,24 @@ public class JobServiceApplication {
 	@Bean
 	ApplicationRunner init(){
 		return args -> {
-			User u = userRestService.findById("652e9c0148ab2146dc2c51f2");
+			//User u = userRestService.findById("652e9c0148ab2146dc2c51f2");
 			jobRepository.save(new Job("Java Developer","Java Developer","Full Time","1000-2000","Tunis","Esprit","652e9c0148ab2146dc2c51f2",null));
 			jobRepository.save(new Job("Java Developer","Java Developer","Full Time","1000-2000","Tunis","Esprit","652e9c0148ab2146dc2c51f2",null));
 			jobRepository.findAll().forEach(System.out::println);
-			System.out.println(u);
-
+			//System.out.println(u);
 			jobApplicationRepo.save(new JobApplication("motivation",jobRepository.findById(Long.valueOf(1)).get(),"652e9c0148ab2146dc2c51f2","C:/inclusify_resumes/cv.pdf",PENDING));
-
 		};
 	}
-	@Bean
-	public static WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:5000")
-						.allowedMethods("GET", "POST", "PUT", "DELETE")
-						.allowedHeaders("*");
-			}
-		};
-	}
+	//@Bean
+	//public static WebMvcConfigurer corsConfigurer() {
+		//return new WebMvcConfigurer() {
+			//@Override
+			//public void addCorsMappings(CorsRegistry registry) {
+			//	registry.addMapping("/**")
+			//			.allowedOrigins("http://localhost:5000")
+			//			.allowedMethods("GET", "POST", "PUT", "DELETE")
+			//			.allowedHeaders("*");
+			//}
+		//};
+	//}
 }

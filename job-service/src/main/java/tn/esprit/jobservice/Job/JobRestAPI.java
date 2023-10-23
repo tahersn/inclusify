@@ -54,5 +54,14 @@ public class JobRestAPI {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/byUser/{user}")
+    public List<Job> getJobsByUser(@PathVariable("user") String user) {
+        List<Job> jobs = jobService.getJobsByUserId(user);
+        if (!jobs.isEmpty()) {
+            return jobs;
+        } else {
+            return null;
+        }
+    }
 
 }
