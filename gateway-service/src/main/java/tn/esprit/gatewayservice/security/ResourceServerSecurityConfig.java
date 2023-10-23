@@ -34,6 +34,7 @@ public class ResourceServerSecurityConfig {
                         "/nodejs-service/api-docs/**",
                         "/skill-service/**",
                         "/h2-console",
+                        "/marketplace-service/**",
                         "/login**",
                         "/nodejs-service/users/**",
                         "api-docs/**",
