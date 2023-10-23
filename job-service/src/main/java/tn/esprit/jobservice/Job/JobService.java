@@ -34,14 +34,15 @@ public class JobService {
         existingJob.setSalaryRange(job.getSalaryRange());
         existingJob.setAddress(job.getAddress());
         existingJob.setCompany(job.getCompany());
-        existingJob.setJobApplications(job.getJobApplications());
-            return jobRepository.save(job);
+        //existingJob.setJobApplications(job.getJobApplications());
+            return jobRepository.save(existingJob   );
     }
         else{
             return null;
         }
 
     }
+
     public Job getJob(Long id){
         if(jobRepository.findById(id).isPresent()){
             return jobRepository.findById(id).get();

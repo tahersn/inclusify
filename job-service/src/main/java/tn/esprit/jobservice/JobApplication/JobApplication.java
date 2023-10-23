@@ -9,7 +9,8 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class JobApplication implements Serializable {
     private static final long serialVersionUID = 123654789;
 
