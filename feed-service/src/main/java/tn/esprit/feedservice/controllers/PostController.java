@@ -21,7 +21,6 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/posts")
-//@CrossOrigin("http://localhost:5000")
 public class PostController {
     private final IPostRepository postRepository;
 
@@ -158,6 +157,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
+    @RolesAllowed("superAdmin")
     public void deletePost(@PathVariable Integer id) {
         // Implement logic to delete a post by ID from the repository
         postRepository.deleteById(id);
