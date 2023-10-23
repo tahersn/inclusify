@@ -1,11 +1,18 @@
 package tn.esprit.feedservice.controllers;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.transaction.annotation.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
 import tn.esprit.feedservice.entities.*;
+import tn.esprit.feedservice.feign.*;
+import tn.esprit.feedservice.model.*;
 import tn.esprit.feedservice.repositories.*;
+import tn.esprit.feedservice.services.utils.*;
 
 import javax.annotation.security.*;
+import java.io.*;
 import java.security.*;
 import java.util.*;
 
@@ -18,26 +25,45 @@ import java.util.*;
 public class PostController {
     private final IPostRepository postRepository;
 
+    private final ImageService imageService;
+    private final UserRestFeignClientService userRestFeignClientService;
+
     @Autowired
-    public PostController(IPostRepository postRepository) {
+    private FileStorageService fileStorageService;
+
+    @Autowired
+    public PostController(IPostRepository postRepository, ImageService imageService, UserRestFeignClientService userRestFeignClientService) {
         this.postRepository = postRepository;
+        this.imageService = imageService;
+        this.userRestFeignClientService = userRestFeignClientService;
     }
 
     @GetMapping("/test")
     @RolesAllowed({"viewer"})
-//    @PermitAll()
     public String getForTest(Principal principal) {
 //        return principal.getName();
         return "A full string for test";
     }
 
+    @Transactional
     @GetMapping()
     @RolesAllowed({"admin"})
-//    @PermitAll()
     public List<Post> getAllPosts(Principal principal) {
-        System.out.println(principal);
-        // Implement logic to retrieve all posts from the repository
-        return (List<Post>) postRepository.findAll();
+        List<Post> posts = (List<Post>) postRepository.findAll();
+
+        // Fetch comments for each post
+        posts.forEach(post -> {
+            List<Comment> comments = post.getComments();
+            comments.size(); // Trigger lazy loading
+
+            List<React> reacts = post.getReacts();
+            reacts.size(); // Trigger lazy loading
+            if (!(post.getUserId() == null)) {
+                post.setUser(userRestFeignClientService.findById(post.getUserId()));
+            }
+        });
+
+        return posts;
     }
 
     @GetMapping("/{id}")
@@ -46,10 +72,60 @@ public class PostController {
         return postRepository.findById(id).orElse(null);
     }
 
-    @PostMapping
-    public Post createPost(@RequestBody Post post) {
-        // Implement logic to create a new post and save it to the repository
+    @RequestMapping(path = "/new", method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PermitAll()
+    public Post createPost(@RequestParam("images") MultipartFile[] images, @RequestParam("description") String description, @RequestParam("userId") String userId) {
+        Post post = new Post();
+        post.setDescription(description);
+        post.setUserId(userId);
+
+        // Fetch user information from the user service
+        User user = userRestFeignClientService.findById(userId);
+        if (user != null) {
+            post.setUser(user);
+        } else {
+            // Handle user not found or validation logic as needed
+            return null;
+        }
+
+        // Save the images and store their URLs in the post
+        List<String> imageUrls = new ArrayList<>();
+
+        for (MultipartFile image : images) {
+            // Save the image to the server
+            String imageUrl = saveImageToServer(image);
+//            String imageUrl = fileStorageService.storeFile(image);
+            if (imageUrl != null) {
+                imageUrls.add("http://localhost:9999/feed-service/images/"+imageUrl);
+            }
+        }
+
+        post.setImages(imageUrls);
+
+        // Save the post to the repository
         return postRepository.save(post);
+    }
+
+    private String saveImageToServer(MultipartFile image) {
+        try {
+            // Define the directory where you want to store images
+            String uploadDirectory = "E:/2023_2024_5TWIN5/microservices/inclusify/inclusify/feed-service/src/main/resources/utils/images/";
+//            String uploadDirectory = "classpath:/utils/images/";
+            // Generate a unique filename (you may use UUID or any other approach)
+            String uniqueFileName = UUID.randomUUID().toString() + "-" + image.getOriginalFilename();
+
+            // Construct the full path to save the file
+            String filePath = uploadDirectory + uniqueFileName;
+
+            // Save the file
+            image.transferTo(new File(filePath));
+
+            // Return the URL of the saved image
+            return uniqueFileName; // You can customize the URL as needed
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Handle the error appropriately
+        }
     }
 
     @PutMapping("/{id}")

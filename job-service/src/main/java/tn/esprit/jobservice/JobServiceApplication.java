@@ -1,4 +1,4 @@
-package tn.esprit.jobservice;
+package tn.esprit.skillservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;

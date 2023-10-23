@@ -14,7 +14,7 @@ import tn.esprit.eventservice.Service.SendEventInformationEmail;
 
 @RestController
 @RequestMapping("/event")
-@CrossOrigin(origins = "http://localhost:5000")
+//@CrossOrigin(origins = "http://localhost:5000")
 public class EventController {
     @Autowired
     private EventRepository eventRepository;

@@ -1,5 +1,6 @@
 package tn.esprit.feedservice.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import tn.esprit.feedservice.model.*;
 
@@ -20,8 +21,11 @@ public class React {
     @Transient
     private User user;
 
+    private String userId;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonBackReference
     private Post post;
 
     private String reactType;

@@ -1,5 +1,6 @@
 package tn.esprit.feedservice.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.*;
 import tn.esprit.feedservice.enums.*;
@@ -17,11 +18,11 @@ import java.util.*;
 @Entity
 @Getter
 @Setter @AllArgsConstructor
-@NoArgsConstructor @ToString
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String description;
@@ -29,20 +30,17 @@ public class Post {
     @ElementCollection
     private List<String> images;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Comment> comments;
-
-    @Enumerated(EnumType.STRING)
-    private PostType postTypeEnum = PostType.ANNOUNCEMENT;
-
-//    @ManyToOne
-//    @JoinColumn(name = "job_id")
-//    private Job job;
 
     @Transient
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private String userId;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<React> reacts;
 
     @CreationTimestamp
@@ -51,4 +49,11 @@ public class Post {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
