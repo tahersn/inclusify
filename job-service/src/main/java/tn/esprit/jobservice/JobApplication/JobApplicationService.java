@@ -19,7 +19,7 @@ public class JobApplicationService {
         // Add any validation logic you need for the CV or motivation.
 
         // Store the CV file in the specified directory
-        String cvFilePath = "c:/inclusify-files/" + cvFile.getOriginalFilename();
+            String cvFilePath = "c:/inclusify-files/" + cvFile.getOriginalFilename();
         File cvFileOnDisk = new File(cvFilePath);
         cvFile.transferTo(cvFileOnDisk);
 

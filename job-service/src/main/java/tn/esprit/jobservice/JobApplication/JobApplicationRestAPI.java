@@ -72,9 +72,9 @@ public class JobApplicationRestAPI {
 
     @GetMapping(value = "/byJobId/{jobId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<JobApplication>> getJobApplicationsByJobId(@PathVariable("jobId") Long jobId) {
+    public List<JobApplication> getJobApplicationsByJobId(@PathVariable("jobId") Long jobId) {
         List<JobApplication> jobApplications = jobApplicationService.getJobApplicationsByJobId(jobId);
-        return new ResponseEntity<>(jobApplications, HttpStatus.OK);
+        return jobApplications;
     }
 
 }
