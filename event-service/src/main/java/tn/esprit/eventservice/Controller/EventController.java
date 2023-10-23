@@ -25,6 +25,11 @@ public class EventController {
     private SendEventInformationEmail sendEventInformationEmail;
 
 
+    @GetMapping(value = "/userEvent/{userId}")
+    public List<Event> getAllEvents(@PathVariable String userId)
+    {
+        return eventRepository.getEventsByUser(userId);
+    }
     @GetMapping
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
