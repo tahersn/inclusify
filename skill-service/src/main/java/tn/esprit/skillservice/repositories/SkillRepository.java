@@ -10,4 +10,7 @@ public interface SkillRepository extends JpaRepository<Skill, Integer> {
 
     @Query("select s from Skill s where s.id in (SELECT q.skill.id FROM Question q GROUP BY q.skill.id HAVING COUNT(q.skill.id) >= 3)")
     List<Skill> getPlayableSkills();
+
+    @Query("select s from Skill s where s.id in (SELECT q.skill.id FROM Quiz q WHERE q.user_id=?1 and q.isSuccessful=true)")
+    List<Skill> getSkillByUser(String userId);
 }

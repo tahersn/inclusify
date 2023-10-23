@@ -1,43 +1,109 @@
 version: "3.9"
 services:
 
-  Job:
-    container_name: job-ms-compose
+  job-service:
+    container_name: job-service
     build: .\job-service
     ports:
-      - "8099:8092"
+      - "8092:8092"
     environment:
       - spring.datasource.url=jdbc:h2:mem:test
       - spring.datasource.username=sa
       - spring.datasource.password=password
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
-
-
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761
     image: "job-ms-dock"
     restart: unless-stopped
     depends_on:
-      - Eureka
+      - eureka-server
+      - api-cloud-gateway
+    networks:
+      - mynetwork
 
-  Event:
-    container_name: event
+  user-node-service:
+    container_name: user-node-service
+    build: ./user-node-service
+    ports:
+      - "3500:3500"
+    environment:
+      - DATABASE_URL=mongodb+srv://onezero:3uoCrHnncNBbD2fO@minassa.xla5jur.mongodb.net/user-ms?retryWrites=true&w=majority
+      - JWT_SECRET= JOZEF
+      - CRYPT_SALT=10
+      - CRYPTO_TOKEN=vqHwszAW7C+3OGhDrCkI0jDBmQtjB9I2
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    image: "job-ms-dock"
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+      - api-cloud-gateway
+    networks:
+      - mynetwork
+
+  feed-service:
+    container_name: feed-service
+    build: ./feed-service
+    ports:
+      - "8090:8090"
+    environment:
+      - spring.datasource.url=jdbc:h2:mem:feeds
+      - spring.datasource.username=root
+      - spring.datasource.password=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
+
+    image: "youssefal/feed-service"
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+      - api-cloud-gateway
+      - config-service
+    networks:
+      - mynetwork
+
+  api-cloud-gateway:
+    build: ./gateway-service
+    ports:
+      - "9999:9999"
+    image: "cloud-gateway"
+    depends_on:
+      - eureka-server
+      - config-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
+    networks:
+      - mynetwork
+
+  config-service:
+    build: ./config-service
+    image: spring-config-service
+    ports:
+      - "8888:8888"
+    networks:
+      - mynetwork
+
+  event-service:
+    container_name: event-service
     image: "event"
     build: .\event-service
     ports:
       - "8091:8091"
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
     depends_on:
-      - "Eureka"
+      - "eureka-server"
+      - "api-cloud-gateway"
+    networks:
+      - mynetwork
 
-  Eureka:
+  eureka-server:
     container_name: eureka
     build: .\eureka-server-service
     hostname: eureka
     ports:
-      - "8762:8761"
-    image: "eureka"
+      - "8761:8761"
+    image: "eureka-server"
     environment:
-      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka/
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka/
     networks:
       - mynetwork
 

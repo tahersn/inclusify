@@ -21,7 +21,6 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/posts")
-//@CrossOrigin("http://localhost:5000")
 public class PostController {
     private final IPostRepository postRepository;
 
@@ -43,6 +42,28 @@ public class PostController {
     public String getForTest(Principal principal) {
 //        return principal.getName();
         return "A full string for test";
+    }
+
+    @Transactional
+    @GetMapping(value = {"/byUser/{userId}"})
+    public List<Post> getAllPosts(@PathVariable String userId,Principal principal) {
+        if (userRestFeignClientService.findById(userId)!=null){
+        List<Post> posts = (List<Post>) postRepository.getPostsByUser(userId);
+
+        // Fetch comments for each post
+        posts.forEach(post -> {
+            List<Comment> comments = post.getComments();
+            comments.size(); // Trigger lazy loading
+
+            List<React> reacts = post.getReacts();
+            reacts.size(); // Trigger lazy loading
+            if (!(post.getUserId() == null)) {
+                post.setUser(userRestFeignClientService.findById(post.getUserId()));
+            }
+        });
+
+        return posts;}
+        return new ArrayList<>();
     }
 
     @Transactional
@@ -136,6 +157,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
+    @RolesAllowed("superAdmin")
     public void deletePost(@PathVariable Integer id) {
         // Implement logic to delete a post by ID from the repository
         postRepository.deleteById(id);

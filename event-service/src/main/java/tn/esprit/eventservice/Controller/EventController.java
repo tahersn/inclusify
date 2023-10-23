@@ -2,6 +2,7 @@ package tn.esprit.eventservice.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.eventservice.Entity.Event;
@@ -24,10 +25,21 @@ public class EventController {
     private SendEventInformationEmail sendEventInformationEmail;
 
 
+    @GetMapping(value = "/userEvent/{userId}")
+    public List<Event> getAllEvents(@PathVariable String userId)
+    {
+        return eventRepository.getEventsByUser(userId);
+    }
     @GetMapping
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Event> getEventById(@PathVariable(value = "eventId") Integer eventId) {
+        return new ResponseEntity<>(eventRepository.findById(eventId).orElse(null), HttpStatus.OK);
+    }
+
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<Event> createEvent(@ModelAttribute Event event, @RequestPart("imageFile") MultipartFile imageFile) {
@@ -85,14 +97,7 @@ public class EventController {
 
     @DeleteMapping("/{eventId}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Integer eventId) {
-        Optional<Event> eventOptional = eventRepository.findById(eventId);
-
-        if (!eventOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
         eventRepository.deleteById(eventId);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
